@@ -1,4 +1,4 @@
-# HijackLibs-Detections
+# HijackLibs-KQL-Detections
 
 ## Overview
 This repository hosts a collection of Kusto Query Language (KQL) detections based on the HijackLibs dataset. It aims to provide security researchers and practitioners with tools to detect DLL sideloading, environment variable manipulation, phantom DLLs, and search order hijacking activities.
