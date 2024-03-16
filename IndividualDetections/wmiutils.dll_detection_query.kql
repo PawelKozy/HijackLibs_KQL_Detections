@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "wmiutils.dll"
+| where not(FolderPath contains "c:\\windows\\system32\\wbem" or FolderPath contains "c:\\windows\\syswow64\\wbem") and (InitiatingProcessFileName endswith "stordiag.exe" or InitiatingProcessFileName endswith "tasklist.exe")
+| invoke FileProfile("SHA1", 1000)

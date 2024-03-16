@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "utiluniclient.dll"
+| where (InitiatingProcessFileName endswith "coreserviceshell.exe")
+| invoke FileProfile("SHA1", 1000)

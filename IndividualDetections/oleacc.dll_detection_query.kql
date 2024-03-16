@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "oleacc.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "bootim.exe" or InitiatingProcessFileName endswith "cttune.exe" or InitiatingProcessFileName endswith "devicepairingwizard.exe" or InitiatingProcessFileName endswith "easeofaccessdialog.exe" or InitiatingProcessFileName endswith "fsquirt.exe" or InitiatingProcessFileName endswith "magnify.exe" or InitiatingProcessFileName endswith "optionalfeatures.exe" or InitiatingProcessFileName endswith "osk.exe" or InitiatingProcessFileName endswith "psr.exe" or InitiatingProcessFileName endswith "sethc.exe" or InitiatingProcessFileName endswith "snippingtool.exe" or InitiatingProcessFileName endswith "utilman.exe" or InitiatingProcessFileName endswith "wmpdmc.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mscorsvc.dll"
+| where not(FolderPath contains "c:\\windows\\microsoft.net\\framework\\v" or FolderPath contains "c:\\windows\\microsoft.net\\framework64\\v") and (InitiatingProcessFileName endswith "mscorsvw.exe" or InitiatingProcessFileName endswith "ngentask.exe")
+| invoke FileProfile("SHA1", 1000)

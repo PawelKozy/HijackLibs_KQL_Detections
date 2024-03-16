@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "rcdll.dll"
+| where not(FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\") and (InitiatingProcessFileName endswith "rc.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "microsoft.ui.xaml.xamltypeinfo.dll"
+| where (InitiatingProcessFileName endswith "onedrive.exe")
+| invoke FileProfile("SHA1", 1000)

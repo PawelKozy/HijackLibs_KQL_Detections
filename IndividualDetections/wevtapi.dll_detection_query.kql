@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "wevtapi.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "cidiag.exe" or InitiatingProcessFileName endswith "dcdiag.exe" or InitiatingProcessFileName endswith "gpupdate.exe" or InitiatingProcessFileName endswith "mbaeparsertask.exe" or InitiatingProcessFileName endswith "netsh.exe" or InitiatingProcessFileName endswith "nlb.exe" or InitiatingProcessFileName endswith "packageinspector.exe" or InitiatingProcessFileName endswith "plasrv.exe" or InitiatingProcessFileName endswith "tracerpt.exe" or InitiatingProcessFileName endswith "wecutil.exe" or InitiatingProcessFileName endswith "wlbs.exe" or InitiatingProcessFileName endswith "wsreset.exe" or InitiatingProcessFileName endswith "filehistory.exe" or InitiatingProcessFileName endswith "logman.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "safestore32.dll"
+| where not(FolderPath contains "c:\\program files\\sophos\\sophos anti-virus") and (InitiatingProcessFileName endswith "ssr32.exe")
+| invoke FileProfile("SHA1", 1000)

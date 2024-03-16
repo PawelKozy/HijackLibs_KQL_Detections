@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mlang.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "calc.exe" or InitiatingProcessFileName endswith "computerdefaults.exe" or InitiatingProcessFileName endswith "fodhelper.exe" or InitiatingProcessFileName endswith "ie4uinit.exe" or InitiatingProcessFileName endswith "excel.exe")
+| invoke FileProfile("SHA1", 1000)

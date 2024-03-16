@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "vender.dll"
+| where not(FolderPath contains "c:\\program files\\asus\\gpu tweakii" or FolderPath contains "c:\\program files\\asus\\vga com\\") and (InitiatingProcessFileName endswith "asusgpufanservice.exe")
+| invoke FileProfile("SHA1", 1000)

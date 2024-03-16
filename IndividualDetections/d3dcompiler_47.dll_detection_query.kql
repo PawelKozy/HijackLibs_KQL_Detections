@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "d3dcompiler_47.dll"
+| where not(FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\x64" or FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\x86" or FolderPath contains "c:\\program files\\windows kits\\10\\redist\\d3d\\x64" or FolderPath contains "c:\\program files\\windows kits\\10\\redist\\d3d\\x86" or FolderPath contains "c:\\program files\\wireshark" or FolderPath contains "c:\\program files\\cisco systems\\cisco jabber" or FolderPath contains "c:\\program files\\microsoft\\edge\\application\\" or FolderPath contains "c:\\program files\\google\\chrome\\application\\" or FolderPath contains "appdata\\local\\microsoft\\teams\\stage" or FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "dwm.exe")
+| invoke FileProfile("SHA1", 1000)

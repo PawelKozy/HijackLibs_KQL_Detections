@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mozglue.dll"
+| where not(FolderPath contains "c:\\program files\\seamonkey" or FolderPath contains "c:\\program files\\mozilla firefox" or FolderPath contains "c:\\program files\\mozilla thunderbird") and (InitiatingProcessFileName endswith "seamonkey.exe")
+| invoke FileProfile("SHA1", 1000)

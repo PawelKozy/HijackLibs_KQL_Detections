@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "duser.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "bdeunlock.exe" or InitiatingProcessFileName endswith "displayswitch.exe" or InitiatingProcessFileName endswith "easeofaccessdialog.exe" or InitiatingProcessFileName endswith "lockscreencontentserver.exe" or InitiatingProcessFileName endswith "mmc.exe" or InitiatingProcessFileName endswith "msdt.exe" or InitiatingProcessFileName endswith "osk.exe" or InitiatingProcessFileName endswith "rekeywiz.exe" or InitiatingProcessFileName endswith "sessionmsg.exe" or InitiatingProcessFileName endswith "taskmgr.exe" or InitiatingProcessFileName endswith "utilman.exe")
+| invoke FileProfile("SHA1", 1000)
