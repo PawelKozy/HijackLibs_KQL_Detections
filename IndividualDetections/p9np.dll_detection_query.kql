@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "p9np.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "certreq.exe" or InitiatingProcessFileName endswith "msdt.exe" or InitiatingProcessFileName endswith "notepad.exe" or InitiatingProcessFileName endswith "powershell.exe" or InitiatingProcessFileName endswith "stordiag.exe" or InitiatingProcessFileName endswith "tabcal.exe" or InitiatingProcessFileName endswith "verifier.exe" or InitiatingProcessFileName endswith "workfolders.exe" or InitiatingProcessFileName endswith "write.exe")
+| invoke FileProfile("SHA1", 1000)

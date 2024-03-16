@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "cdpsgshims.dll"
+| where (InitiatingProcessFileName endswith "svchost.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "symsrv.dll"
+| where not(FolderPath contains "c:\\program files\\windows kits\\10\\debuggers\\") and (InitiatingProcessFileName endswith "symstore.exe")
+| invoke FileProfile("SHA1", 1000)

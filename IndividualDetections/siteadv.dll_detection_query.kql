@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "siteadv.dll"
+| where not(FolderPath contains "c:\\program files\\siteadvisor\\") and (InitiatingProcessFileName endswith "sideadv.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "winbrand.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "bdehdcfg.exe" or InitiatingProcessFileName endswith "licensediag.exe" or InitiatingProcessFileName endswith "slui.exe" or InitiatingProcessFileName endswith "systempropertiesadvanced.exe" or InitiatingProcessFileName endswith "systemsettingsadminflows.exe")
+| invoke FileProfile("SHA1", 1000)

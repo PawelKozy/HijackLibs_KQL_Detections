@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "winmm.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "mblctr.exe" or InitiatingProcessFileName endswith "mspaint.exe" or InitiatingProcessFileName endswith "mstsc.exe" or InitiatingProcessFileName endswith "osk.exe" or InitiatingProcessFileName endswith "presentationsettings.exe" or InitiatingProcessFileName endswith "proximityuxhost.exe" or InitiatingProcessFileName endswith "wfs.exe" or InitiatingProcessFileName endswith "winsat.exe")
+| invoke FileProfile("SHA1", 1000)

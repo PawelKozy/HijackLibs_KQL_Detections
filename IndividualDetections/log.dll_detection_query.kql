@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "log.dll"
+| where not(FolderPath contains "c:\\program files\\bitdefender antivirus free") and (InitiatingProcessFileName endswith "bdreinit.exe")
+| invoke FileProfile("SHA1", 1000)

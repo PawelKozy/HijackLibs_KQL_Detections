@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "vftrace.dll"
+| where not(FolderPath contains "c:\\program files\\cyberark\\endpoint privilege manager\\agent\\x32" or FolderPath contains "c:\\program files\\cyberark\\endpoint privilege manager\\agent\\x64" or FolderPath contains "c:\\program files\\cyberark\\endpoint privilege manager\\agent") and (InitiatingProcessFileName endswith "vf_host.exe")
+| invoke FileProfile("SHA1", 1000)

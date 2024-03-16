@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mfc42u.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "devicepairingwizard.exe" or InitiatingProcessFileName endswith "dirquota.exe" or InitiatingProcessFileName endswith "eudcedit.exe" or InitiatingProcessFileName endswith "filescrn.exe" or InitiatingProcessFileName endswith "ldp.exe" or InitiatingProcessFileName endswith "msconfig.exe" or InitiatingProcessFileName endswith "msinfo32.exe" or InitiatingProcessFileName endswith "mspaint.exe" or InitiatingProcessFileName endswith "nlbmgr.exe" or InitiatingProcessFileName endswith "shrpubw.exe" or InitiatingProcessFileName endswith "storrept.exe" or InitiatingProcessFileName endswith "verifiergui.exe" or InitiatingProcessFileName endswith "wfs.exe")
+| invoke FileProfile("SHA1", 1000)

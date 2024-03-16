@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "acrodistdll.dll"
+| where not(FolderPath contains "c:\\program files\\adobe\\acrobat " and FolderPath contains "\\acrobat") and (InitiatingProcessFileName endswith "acrodist.exe")
+| invoke FileProfile("SHA1", 1000)

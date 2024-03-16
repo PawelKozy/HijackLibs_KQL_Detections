@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "rasman.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "cmdl32.exe" or InitiatingProcessFileName endswith "nethost.exe" or InitiatingProcessFileName endswith "netsh.exe" or InitiatingProcessFileName endswith "rasautou.exe" or InitiatingProcessFileName endswith "rasdial.exe")
+| invoke FileProfile("SHA1", 1000)

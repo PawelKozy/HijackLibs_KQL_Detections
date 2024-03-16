@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "policymanager.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "displayswitch.exe" or InitiatingProcessFileName endswith "easpolicymanagerbrokerhost.exe" or InitiatingProcessFileName endswith "edpcleanup.exe" or InitiatingProcessFileName endswith "eduprintprov.exe" or InitiatingProcessFileName endswith "hvsievaluator.exe" or InitiatingProcessFileName endswith "mdmdiagnosticstool.exe" or InitiatingProcessFileName endswith "omadmclient.exe" or InitiatingProcessFileName endswith "settingsynchost.exe" or InitiatingProcessFileName endswith "workfolders.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "dataexchange.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "certreq.exe" or InitiatingProcessFileName endswith "charmap.exe" or InitiatingProcessFileName endswith "notepad.exe" or InitiatingProcessFileName endswith "wordpad.exe" or InitiatingProcessFileName endswith "chrome.exe" or InitiatingProcessFileName endswith "msedge.exe" or InitiatingProcessFileName endswith "firefox.exe" or InitiatingProcessFileName endswith "powerpnt.exe" or InitiatingProcessFileName endswith "msedgewebview2.exe" or InitiatingProcessFileName endswith "excel.exe" or InitiatingProcessFileName endswith "mspub.exe")
+| invoke FileProfile("SHA1", 1000)

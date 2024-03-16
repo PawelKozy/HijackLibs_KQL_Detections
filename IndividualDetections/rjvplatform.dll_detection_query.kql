@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "rjvplatform.dll"
+| where not(FolderPath contains "c:\\windows\\system32\\systemresetplatform" or FolderPath contains "c:\\windows\\syswow64\\systemresetplatform") and (InitiatingProcessFileName endswith "systemresetplatform.exe")
+| invoke FileProfile("SHA1", 1000)

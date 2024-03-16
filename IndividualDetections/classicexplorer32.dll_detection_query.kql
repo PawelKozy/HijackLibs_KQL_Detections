@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "classicexplorer32.dll"
+| where not(FolderPath contains "c:\\program files\\classic shell" or FolderPath contains "c:\\program files\\open-shell") and (InitiatingProcessFileName endswith "classicexplorersettings.exe")
+| invoke FileProfile("SHA1", 1000)

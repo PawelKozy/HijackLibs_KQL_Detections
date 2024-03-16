@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "x32bridge.dll"
+| where (InitiatingProcessFileName endswith "x32dbg.exe")
+| invoke FileProfile("SHA1", 1000)

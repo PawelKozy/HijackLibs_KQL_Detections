@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "tmdbglog.dll"
+| where not(FolderPath contains "c:\\program files\\trend micro\\titanium") and (InitiatingProcessFileName endswith "ptwatchdog.exe")
+| invoke FileProfile("SHA1", 1000)

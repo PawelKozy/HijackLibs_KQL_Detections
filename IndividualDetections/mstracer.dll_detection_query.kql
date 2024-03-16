@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mstracer.dll"
+| where (InitiatingProcessFileName endswith "searchindexer.exe" or InitiatingProcessFileName endswith "searchprotocolhost.exe")
+| invoke FileProfile("SHA1", 1000)

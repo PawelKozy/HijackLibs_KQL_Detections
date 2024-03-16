@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "tmtap.dll"
+| where (InitiatingProcessFileName endswith "pwmsvc.exe")
+| invoke FileProfile("SHA1", 1000)
