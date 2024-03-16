@@ -466,3 +466,4 @@ or (FileName == "outllib.dll" and not(FolderPath contains "%programfiles%\\micro
 or (FileName == "rcdll.dll" and not(FolderPath contains "%programfiles%\\windows kits\\10\\bin\\%version%\\") and (InitiatingProcessFileName endswith "rc.exe"))
 or (FileName == "symsrv.dll" and not(FolderPath contains "%programfiles%\\windows kits\\10\\debuggers\\") and (InitiatingProcessFileName endswith "symstore.exe"))
 or (FileName == "windowsperformancerecorderui.dll" and not(FolderPath contains "c:\\program files\\windows kits\\10\\windows performance toolkit") and (InitiatingProcessFileName endswith "wprui.exe"))
+| invoke FileProfile("SHA1", 1000)
