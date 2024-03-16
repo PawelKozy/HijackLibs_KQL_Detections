@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "iviewers.dll"
+| where not(FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\x86" or FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\x64" or FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\arm" or FolderPath contains "c:\\program files\\windows kits\\10\\bin\\" and FolderPath contains "\\arm64") and (InitiatingProcessFileName endswith "oleview.exe" or InitiatingProcessFileName endswith "oleview.exe" or InitiatingProcessFileName endswith "oleview.exe")
+| invoke FileProfile("SHA1", 1000)

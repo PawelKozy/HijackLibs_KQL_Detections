@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "ktmw32.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "ktmutil.exe" or InitiatingProcessFileName endswith "msdtc.exe" or InitiatingProcessFileName endswith "mstsc.exe" or InitiatingProcessFileName endswith "netsh.exe" or InitiatingProcessFileName endswith "rstrui.exe" or InitiatingProcessFileName endswith "srtasks.exe" or InitiatingProcessFileName endswith "wkspbroker.exe")
+| invoke FileProfile("SHA1", 1000)

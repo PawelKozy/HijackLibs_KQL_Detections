@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "shell32.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "certreq.exe" or InitiatingProcessFileName endswith "control.exe" or InitiatingProcessFileName endswith "dpiscaling.exe" or InitiatingProcessFileName endswith "mobsync.exe" or InitiatingProcessFileName endswith "mstsc.exe" or InitiatingProcessFileName endswith "notepad.exe" or InitiatingProcessFileName endswith "presentationsettings.exe" or InitiatingProcessFileName endswith "shellappruntime.exe" or InitiatingProcessFileName endswith "wallpaperhost.exe")
+| invoke FileProfile("SHA1", 1000)

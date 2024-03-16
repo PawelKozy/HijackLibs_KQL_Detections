@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "d3d12.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "dxgiadaptercache.exe" or InitiatingProcessFileName endswith "taskmgr.exe")
+| invoke FileProfile("SHA1", 1000)

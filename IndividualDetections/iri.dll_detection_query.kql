@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "iri.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "deviceenroller.exe" or InitiatingProcessFileName endswith "dmcertinst.exe" or InitiatingProcessFileName endswith "dmcfghost.exe" or InitiatingProcessFileName endswith "dmomacpmo.exe" or InitiatingProcessFileName endswith "hvsievaluator.exe" or InitiatingProcessFileName endswith "mdmappinstaller.exe" or InitiatingProcessFileName endswith "mdmdiagnosticstool.exe" or InitiatingProcessFileName endswith "omadmclient.exe" or InitiatingProcessFileName endswith "usocoreworker.exe")
+| invoke FileProfile("SHA1", 1000)

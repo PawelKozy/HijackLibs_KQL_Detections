@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "iumbase.dll"
+| where not(FolderPath contains "c:\\windows\\system32") and (InitiatingProcessFileName endswith "bioiso.exe" or InitiatingProcessFileName endswith "fsiso.exe" or InitiatingProcessFileName endswith "ngciso.exe")
+| invoke FileProfile("SHA1", 1000)

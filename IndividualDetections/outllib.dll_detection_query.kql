@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "outllib.dll"
+| where not(FolderPath contains "c:\\program files\\microsoft office\\office" or FolderPath contains "c:\\program files\\microsoft office\\root\\office") and (InitiatingProcessFileName endswith "outlook.exe" or InitiatingProcessFileName endswith "outlook.exe")
+| invoke FileProfile("SHA1", 1000)

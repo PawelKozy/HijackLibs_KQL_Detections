@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "hpcustpartui.dll"
+| where not(FolderPath contains "c:\\program files\\hp") and (InitiatingProcessFileName endswith "hpcustparticui.exe")
+| invoke FileProfile("SHA1", 1000)
