@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "unityplayer.dll"
+| where not(FolderPath contains "appdata\\local\\temp\\" and FolderPath contains "\\windows") and (InitiatingProcessFileName endswith "kingdomtwocrowns.exe")
+| invoke FileProfile("SHA1", 1000)

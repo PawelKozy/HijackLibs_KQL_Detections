@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "shellsel.ocx"
+| where (InitiatingProcessFileName endswith "symantec.exe")
+| invoke FileProfile("SHA1", 1000)

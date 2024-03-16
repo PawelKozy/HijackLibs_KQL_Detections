@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "edputil.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "calc.exe" or InitiatingProcessFileName endswith "compmgmtlauncher.exe" or InitiatingProcessFileName endswith "computerdefaults.exe" or InitiatingProcessFileName endswith "dpiscaling.exe" or InitiatingProcessFileName endswith "fodhelper.exe" or InitiatingProcessFileName endswith "mobsync.exe" or InitiatingProcessFileName endswith "resmon.exe" or InitiatingProcessFileName endswith "sdclt.exe" or InitiatingProcessFileName endswith "slui.exe" or InitiatingProcessFileName endswith "workfolders.exe" or InitiatingProcessFileName endswith "write.exe")
+| invoke FileProfile("SHA1", 1000)

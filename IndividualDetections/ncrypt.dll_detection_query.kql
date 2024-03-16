@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "ncrypt.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "certreq.exe" or InitiatingProcessFileName endswith "certutil.exe" or InitiatingProcessFileName endswith "clipup.exe" or InitiatingProcessFileName endswith "dmcertinst.exe" or InitiatingProcessFileName endswith "dnscmd.exe" or InitiatingProcessFileName endswith "dsregcmd.exe" or InitiatingProcessFileName endswith "filehistory.exe" or InitiatingProcessFileName endswith "sgrmbroker.exe")
+| invoke FileProfile("SHA1", 1000)

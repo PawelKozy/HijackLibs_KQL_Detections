@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "ldvpocx.ocx"
+| where not(FolderPath contains "c:\\program files\\symantec_client_security\\symantec antivirus" or FolderPath contains "c:\\program files\\symantec antivirus") and (InitiatingProcessFileName endswith "ldvpreg.exe")
+| invoke FileProfile("SHA1", 1000)

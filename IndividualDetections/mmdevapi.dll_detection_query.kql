@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mmdevapi.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "audiodg.exe" or InitiatingProcessFileName endswith "osk.exe" or InitiatingProcessFileName endswith "certreq.exe" or InitiatingProcessFileName endswith "devicecensus.exe" or InitiatingProcessFileName endswith "mblctr.exe" or InitiatingProcessFileName endswith "notepad.exe" or InitiatingProcessFileName endswith "presentationsettings.exe" or InitiatingProcessFileName endswith "sndvol.exe")
+| invoke FileProfile("SHA1", 1000)

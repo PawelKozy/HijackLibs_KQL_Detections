@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "winutils.dll"
+| where not(FolderPath contains "c:\\program files\\palo alto networks\\traps") and (InitiatingProcessFileName endswith "cydump.exe")
+| invoke FileProfile("SHA1", 1000)

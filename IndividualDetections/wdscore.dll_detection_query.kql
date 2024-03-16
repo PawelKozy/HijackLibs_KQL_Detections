@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "wdscore.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "bootim.exe" or InitiatingProcessFileName endswith "deploymentcsphelper.exe" or InitiatingProcessFileName endswith "djoin.exe" or InitiatingProcessFileName endswith "dnscacheugc.exe" or InitiatingProcessFileName endswith "muiunattend.exe" or InitiatingProcessFileName endswith "netbtugc.exe" or InitiatingProcessFileName endswith "netiougc.exe" or InitiatingProcessFileName endswith "pnpunattend.exe" or InitiatingProcessFileName endswith "recoverydrive.exe" or InitiatingProcessFileName endswith "resetengine.exe" or InitiatingProcessFileName endswith "setupugc.exe" or InitiatingProcessFileName endswith "sysreseterr.exe" or InitiatingProcessFileName endswith "systemreset.exe" or InitiatingProcessFileName endswith "tapiunattend.exe" or InitiatingProcessFileName endswith "ieunatt.exe")
+| invoke FileProfile("SHA1", 1000)

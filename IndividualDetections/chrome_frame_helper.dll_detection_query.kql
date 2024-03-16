@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "chrome_frame_helper.dll"
+| where not(FolderPath contains "appdata\\local\\google\\chrome\\application" or FolderPath contains "c:\\program files\\google\\chrome\\application") and (InitiatingProcessFileName endswith "chrome_frame_helper.exe")
+| invoke FileProfile("SHA1", 1000)

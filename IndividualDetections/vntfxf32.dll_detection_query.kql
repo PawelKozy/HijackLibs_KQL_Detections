@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "vntfxf32.dll"
+| where not(FolderPath contains "c:\\program files\\venta\\ventafax & voice") and (InitiatingProcessFileName endswith "spoololk.exe")
+| invoke FileProfile("SHA1", 1000)
