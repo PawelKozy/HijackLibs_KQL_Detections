@@ -5,9 +5,8 @@ This repository hosts a collection of Kusto Query Language (KQL) detections base
 
 ## Structure
 - **GeneralDetections**: Broad detections that apply across various hijacking techniques.
-- **IndividualDetections**: Specific detections tailored to each hijacking technique, including Sideloading, Environment Variable, Phantom, and Search Order.
+- **IndividualDetections**: Specific detections tailored to each hijackable DLL.
 - **Scripts**: Utility scripts for generating and managing detections.
-- **Data**: Raw data files used for generating detections.
 - **Tests**: Scripts for testing the effectiveness and accuracy of detections.
 
 ## Usage
