@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "atl.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "dsquery.exe" or InitiatingProcessFileName endswith "filescrn.exe" or InitiatingProcessFileName endswith "msconfig.exe" or InitiatingProcessFileName endswith "msdt.exe" or InitiatingProcessFileName endswith "msinfo32.exe" or InitiatingProcessFileName endswith "perfmon.exe" or InitiatingProcessFileName endswith "quickassist.exe" or InitiatingProcessFileName endswith "storrept.exe" or InitiatingProcessFileName endswith "vds.exe" or InitiatingProcessFileName endswith "vdsldr.exe" or InitiatingProcessFileName endswith "vssadmin.exe" or InitiatingProcessFileName endswith "wfs.exe")
+| invoke FileProfile("SHA1", 1000)

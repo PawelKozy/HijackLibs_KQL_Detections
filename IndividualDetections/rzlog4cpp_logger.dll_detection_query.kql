@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "rzlog4cpp_logger.dll"
+| where not(FolderPath contains "appdata\\local\\razer\\ingameengine\\cache\\rzfpsapplet") and (InitiatingProcessFileName endswith "rzcefrenderprocess.exe")
+| invoke FileProfile("SHA1", 1000)

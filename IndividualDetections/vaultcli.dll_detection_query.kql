@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "vaultcli.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "cipher.exe" or InitiatingProcessFileName endswith "efsui.exe" or InitiatingProcessFileName endswith "rekeywiz.exe" or InitiatingProcessFileName endswith "vaultcmd.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mpclient.dll"
+| where not(FolderPath contains "c:\\program files\\windows defender" or FolderPath contains "c:\\programdata\\microsoft\\windows defender\\platform\\") and (InitiatingProcessFileName endswith "mpcmdrun.exe" or InitiatingProcessFileName endswith "nissrv.exe")
+| invoke FileProfile("SHA1", 1000)

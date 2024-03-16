@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "formdll.dll"
+| where not(FolderPath contains "c:\\program files\\common files\\microsoft shared\\notesync forms") and (InitiatingProcessFileName endswith "inkform.exe")
+| invoke FileProfile("SHA1", 1000)

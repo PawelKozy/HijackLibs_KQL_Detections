@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "glib-2.0.dll"
+| where not(FolderPath contains "c:\\program files\\vmware\\vmware tools" or FolderPath contains "c:\\program files\\vmware\\vmware workstation" or FolderPath contains "c:\\program files\\vmware\\vmware player") and (InitiatingProcessFileName endswith "vmwarexferlogs.exe")
+| invoke FileProfile("SHA1", 1000)

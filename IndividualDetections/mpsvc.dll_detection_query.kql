@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "mpsvc.dll"
+| where not(FolderPath contains "c:\\programdata\\microsoft\\windows defender\\platform\\") and (InitiatingProcessFileName endswith "msmpeng.exe")
+| invoke FileProfile("SHA1", 1000)

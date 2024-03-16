@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "reagent.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "bootim.exe" or InitiatingProcessFileName endswith "reagentc.exe" or InitiatingProcessFileName endswith "recdisc.exe" or InitiatingProcessFileName endswith "recoverydrive.exe" or InitiatingProcessFileName endswith "relpost.exe" or InitiatingProcessFileName endswith "resetengine.exe" or InitiatingProcessFileName endswith "sdclt.exe" or InitiatingProcessFileName endswith "systemreset.exe")
+| invoke FileProfile("SHA1", 1000)

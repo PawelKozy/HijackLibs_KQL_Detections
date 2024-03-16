@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "wer.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "dwwin.exe" or InitiatingProcessFileName endswith "msdt.exe" or InitiatingProcessFileName endswith "pcalua.exe" or InitiatingProcessFileName endswith "relpost.exe" or InitiatingProcessFileName endswith "rstrui.exe" or InitiatingProcessFileName endswith "sdclt.exe" or InitiatingProcessFileName endswith "srtasks.exe" or InitiatingProcessFileName endswith "wbengine.exe" or InitiatingProcessFileName endswith "werfault.exe" or InitiatingProcessFileName endswith "werfaultsecure.exe" or InitiatingProcessFileName endswith "wermgr.exe")
+| invoke FileProfile("SHA1", 1000)

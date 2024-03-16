@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "dbgeng.dll"
+| where not(FolderPath contains "c:\\program files\\windows kits\\" and FolderPath contains "\\debuggers\\x86" or FolderPath contains "c:\\program files\\windows kits\\" and FolderPath contains "\\debuggers\\x64" or FolderPath contains "c:\\program files\\windows kits\\" and FolderPath contains "\\debuggers\\arm" or FolderPath contains "c:\\program files\\windows kits\\" and FolderPath contains "\\debuggers\\arm64") and (InitiatingProcessFileName endswith "windbg.exe")
+| invoke FileProfile("SHA1", 1000)

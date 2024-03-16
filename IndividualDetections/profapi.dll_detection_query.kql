@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "profapi.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "certreq.exe" or InitiatingProcessFileName endswith "edpcleanup.exe" or InitiatingProcessFileName endswith "immersivetpmvscmgrsvr.exe" or InitiatingProcessFileName endswith "manage-bde.exe" or InitiatingProcessFileName endswith "mousocoreworker.exe" or InitiatingProcessFileName endswith "omadmclient.exe" or InitiatingProcessFileName endswith "provtool.exe" or InitiatingProcessFileName endswith "rmttpmvscmgrsvr.exe" or InitiatingProcessFileName endswith "tpmvscmgrsvr.exe" or InitiatingProcessFileName endswith "usocoreworker.exe" or InitiatingProcessFileName endswith "wwahost.exe" or InitiatingProcessFileName endswith "write.exe")
+| invoke FileProfile("SHA1", 1000)

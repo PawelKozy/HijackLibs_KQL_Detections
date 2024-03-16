@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "wkscli.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "djoin.exe" or InitiatingProcessFileName endswith "dsregcmd.exe" or InitiatingProcessFileName endswith "edpcleanup.exe" or InitiatingProcessFileName endswith "getmac.exe" or InitiatingProcessFileName endswith "ie4uinit.exe" or InitiatingProcessFileName endswith "mshta.exe" or InitiatingProcessFileName endswith "mstsc.exe" or InitiatingProcessFileName endswith "net.exe" or InitiatingProcessFileName endswith "net1.exe" or InitiatingProcessFileName endswith "netdom.exe" or InitiatingProcessFileName endswith "secinit.exe" or InitiatingProcessFileName endswith "systempropertiesadvanced.exe" or InitiatingProcessFileName endswith "systemsettingsadminflows.exe" or InitiatingProcessFileName endswith "whoami.exe")
+| invoke FileProfile("SHA1", 1000)

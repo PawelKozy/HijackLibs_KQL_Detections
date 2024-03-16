@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "opera_elf.dll"
+| where not(FolderPath contains "appdata\\local\\programs\\opera\\") and (InitiatingProcessFileName endswith "opera.exe")
+| invoke FileProfile("SHA1", 1000)

@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "sppc.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "msinfo32.exe" or InitiatingProcessFileName endswith "netsh.exe" or InitiatingProcessFileName endswith "packageinspector.exe" or InitiatingProcessFileName endswith "slui.exe")
+| invoke FileProfile("SHA1", 1000)

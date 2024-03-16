@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "facesdk.dll"
+| where not(FolderPath contains "c:\\program files\\luxand\\facesdk\\bin\\win64") and (InitiatingProcessFileName endswith "facialfeaturedemo.exe")
+| invoke FileProfile("SHA1", 1000)

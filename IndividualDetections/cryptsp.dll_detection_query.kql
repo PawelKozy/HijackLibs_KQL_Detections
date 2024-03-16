@@ -1,0 +1,5 @@
+DeviceImageLoadEvents
+| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)
+| where Filename == "cryptsp.dll"
+| where not(FolderPath contains "c:\\windows\\system32" or FolderPath contains "c:\\windows\\syswow64") and (InitiatingProcessFileName endswith "bcdedit.exe" or InitiatingProcessFileName endswith "disksnapshot.exe" or InitiatingProcessFileName endswith "genvalobj.exe" or InitiatingProcessFileName endswith "omadmclient.exe" or InitiatingProcessFileName endswith "rmactivate.exe" or InitiatingProcessFileName endswith "rmactivate_isv.exe" or InitiatingProcessFileName endswith "rmactivate_ssp.exe" or InitiatingProcessFileName endswith "rmactivate_ssp_isv.exe" or InitiatingProcessFileName endswith "werfault.exe")
+| invoke FileProfile("SHA1", 1000)
