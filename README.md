@@ -1,5 +1,6 @@
 # HijackLibs KQL Detections (ARCHIVED)
 Status: Archived
+
 This repository has been archived. The detection methods in this repository, which were based on static KQL queries, have been deprecated.
 All future development, including the use of the externaldata operator for dynamic and scalable detection queries, has been migrated to a new repository:
 
