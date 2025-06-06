@@ -2,6 +2,7 @@ import json
 import requests
 import re
 import os
+import sys
 def sanitize_filename(filename):
     """
     Sanitize the filename to remove any characters that might not be valid in file names.
@@ -71,11 +72,17 @@ if __name__ == "__main__":
     generic_output_directory = "GeneralDetections"
     # Ensure output directories exist
     ensure_directory_exists(detection_output_directory)
-    response = requests.get(url)
+    try:
+        response = requests.get(url, timeout=10)
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data from {url}: {e}")
+        sys.exit(1)
+
     if response.status_code == 200:
         data = response.json()
         generate_kql_query(data, detection_output_directory, generic_output_directory)
         print(f"Individual detection queries generated in '{detection_output_directory}' directory.")
         print(f"Combined detection queries generated in '{generic_output_directory}' directory.")
     else:
-        print(f"Failed to fetch data: {response.status_code}")
+        print(f"Failed to fetch data: HTTP {response.status_code}")
+        sys.exit(1)
