@@ -12,6 +12,8 @@ def ensure_directory_exists(directory):
         os.makedirs(directory)
 def generate_kql_query(data, detection_output_directory, generic_output_directory):
     """Create KQL queries based on HijackLibs API data."""
+    ensure_directory_exists(detection_output_directory)
+    ensure_directory_exists(generic_output_directory)
     initial_transforms = "DeviceImageLoadEvents\n| extend FileName = tolower(FileName), FolderPath = tolower(FolderPath), InitiatingProcessFileName = tolower(InitiatingProcessFileName)\n"
     file_profile = "\n| invoke FileProfile(\"SHA1\", 1000)\n"
     all_conditions = []
@@ -50,11 +52,12 @@ def generate_kql_query(data, detection_output_directory, generic_output_director
         if individual_conditions:
             dll_condition = f'FileName == "{dll_name}"'
             all_conditions.append(f"({dll_condition} and {' and '.join(individual_conditions)})")
-        # Writing individual file
-        safe_dll_name = sanitize_filename(dll_name)
-        with open(f"{detection_output_directory}/{safe_dll_name}_detection_query.kql", "w") as file:
-            individual_query = initial_transforms + "| where " + " and ".join(individual_conditions) + file_profile
-            file.write(individual_query)
+        # Writing individual file only when there are conditions
+        if individual_conditions:
+            safe_dll_name = sanitize_filename(dll_name)
+            with open(f"{detection_output_directory}/{safe_dll_name}_detection_query.kql", "w") as file:
+                individual_query = initial_transforms + "| where " + " and ".join(individual_conditions) + file_profile
+                file.write(individual_query)
     # Constructing the combined query
     combined_conditions = " or ".join(all_conditions)
     combined_conditions = combined_conditions.replace(" or (FileName", "\nor (FileName")
@@ -67,8 +70,6 @@ if __name__ == "__main__":
     url = "https://hijacklibs.net/api/hijacklibs.json"
     detection_output_directory = "IndividualDetections"
     generic_output_directory = "GeneralDetections"
-    # Ensure output directories exist
-    ensure_directory_exists(detection_output_directory)
     try:
         response = requests.get(url, timeout=10)
     except requests.exceptions.RequestException as e:
