@@ -6,6 +6,8 @@ All future development, including the use of the externaldata operator for dynam
 
 New Repository:
 
+For a practical example of using the `externaldata` operator with HijackLibs, see [this blog post](https://medium.com/@kozielpawe/detecting-dll-sideloading-and-vulnerable-driver-loads-using-hijacklibs-and-loldrivers-apis-e18a0c4b8ce1). The article outlines a more flexible approach that keeps your detection queries up to date.
+
 ## Overview
 This repository hosts a collection of Kusto Query Language (KQL) detections based on the HijackLibs dataset. It aims to provide security researchers and practitioners with tools to detect DLL sideloading, environment variable manipulation, phantom DLLs, and search order hijacking activities.
 
